@@ -135,13 +135,13 @@ a.active {
   cursor: pointer;
   transition: background-color 0.5s ease, color 0.5s ease;
   display: block;
-  max-width: fit-content; /* Adjusts width to content */
+  max-width: max-content; /* Adjusts width to content */
   margin: 0 auto; /* Centers the button */
 }
 
-@media (max-width: 400px) { /* Bootstrap's breakpoint for phones */
+@media (max-width: 425px) { /* Bootstrap's breakpoint for phones */
   .btn.btn-primary.btn-lg {
-    max-width: 200px;
+    max-width:min-content;
   }
 }
 
