@@ -85,13 +85,13 @@ function createCategoryCard(entry) {
   // Set vertical padding to 6px (0 on left/right if desired)
 
   const typeCol = document.createElement('div');
-  typeCol.className = 'col-4 text-start content-paragraph';
+  typeCol.className = 'col-6 text-start content-paragraph';
   typeCol.textContent = entry.type;
   typeCol.style.padding = '0 0 3px 18px';
   bottomRow.appendChild(typeCol);
 
   const sizeCol = document.createElement('div');
-  sizeCol.className = 'col-4 text-center content-paragraph';
+  sizeCol.className = 'col-3 text-center content-paragraph';
   sizeCol.style.padding = '0 0 3px 0';
   let fileSizeText = "N/A";
   if (entry.file_size && entry.data_metric) {
@@ -103,7 +103,7 @@ function createCategoryCard(entry) {
   bottomRow.appendChild(sizeCol);
 
   const yearCol = document.createElement('div');
-  yearCol.className = 'col-4 text-end content-paragraph';
+  yearCol.className = 'col-3 text-end content-paragraph';
   yearCol.style.padding = '0 18px 3px 0';
   yearCol.textContent = entry.year;
   bottomRow.appendChild(yearCol);
