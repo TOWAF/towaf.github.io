@@ -1,0 +1,9 @@
+{
+  "CodeName": "TOWAF",
+  "ColorVariables": {
+    "--color-background": "rgb(240, 240, 240)",
+    "--color-foreground-dark": "rgb(32, 32, 32)",
+    "--color-foreground-light": "rgb(255, 255, 255)",
+    "--main-color": "rgb(224, 128, 64)"
+  }
+}

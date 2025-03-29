@@ -1,0 +1,246 @@
+/*------------------------------------------------------------------------------
+  Global Reset
+------------------------------------------------------------------------------*/
+* {
+  /* Reset margin and padding for all elements */
+  margin: 0;
+  padding: 0;
+}
+
+/*------------------------------------------------------------------------------
+  CSS Variables
+------------------------------------------------------------------------------*/
+:root {
+  --font-size-xxxl: 2.5rem; /* equivalent to xxx-large */
+  --font-size-xxl: 2rem;    /* equivalent to xx-large */
+  --font-size-xl: 1.75rem;  /* equivalent to x-large */
+  --font-size-lg: 1.25rem;  /* equivalent to large */
+  
+  /* Color Variables */
+  --color-background: rgb(240, 240, 240);       /* Background (darky white) */
+  --color-foreground-dark: rgb(32, 32, 32);       /* Foreground (dark) */
+  --color-foreground-light: rgb(255, 255, 255);   /* Foreground (light) */
+  --main-color: rgb(224, 128, 64);                /* Main color */
+}
+
+/*------------------------------------------------------------------------------
+  Global Styles
+------------------------------------------------------------------------------*/
+html,
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+               "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+               "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  color: var(--color-foreground-dark);
+  background: var(--color-background);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/*------------------------------------------------------------------------------
+  Content Area
+------------------------------------------------------------------------------*/
+.content {
+  text-align: center;
+  padding: 10px;
+  margin: auto;
+  max-width: 1000px;
+  flex: 1;
+}
+
+/*------------------------------------------------------------------------------
+  Text Styling
+------------------------------------------------------------------------------*/
+/* Headers */
+.content-header-xxxl,
+.content-header-xxxl-center {
+  font-size: var(--font-size-xxxl);
+}
+.content-header-xxxl {
+  text-align: left;
+}
+.content-header-xxxl-center {
+  text-align: center;
+}
+
+.content-header-xxl,
+.content-header-xxl-center {
+  font-size: var(--font-size-xxl);
+}
+.content-header-xxl {
+  text-align: left;
+}
+.content-header-xxl-center {
+  text-align: center;
+}
+
+.content-header-xl,
+.content-header-xl-center {
+  font-size: var(--font-size-xl);
+}
+.content-header-xl {
+  text-align: left;
+}
+.content-header-xl-center {
+  text-align: center;
+}
+
+/* Paragraphs */
+.content-paragraph,
+.content-paragraph-center {
+  font-size: var(--font-size-lg);
+}
+.content-paragraph {
+  text-align: left;
+}
+.content-paragraph-center {
+  text-align: center;
+}
+
+/*------------------------------------------------------------------------------
+  Link Styling
+------------------------------------------------------------------------------*/
+.content-paragraph-link {
+  color: var(--color-foreground-dark);
+}
+
+.no-underline {
+  color: var(--main-color);
+  text-decoration: none;
+}
+.no-underline:hover {
+  text-decoration: underline;
+}
+
+/* Global link hover and active state */
+a:hover {
+  color: var(--main-color);
+}
+a.active {
+  color: var(--color-foreground-dark);
+}
+
+/*------------------------------------------------------------------------------
+  Button Styling
+------------------------------------------------------------------------------*/
+.btn.btn-primary.btn-lg {
+  font-size: xx-large;
+  text-align: center;
+  text-decoration: none;
+  padding: 5px 15px;
+  color: var(--main-color) !important;
+  background-color: var(--color-foreground-light) !important;
+  border: 5px solid var(--main-color) !important;
+  cursor: pointer;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  display: block;
+  width: fit-content; /* Adjusts width to content */
+  margin: 0 auto; /* Centers the button */
+}
+
+.btn.btn-primary.btn-lg:hover {
+  background-color: var(--main-color) !important;
+  color: var(--color-foreground-light) !important;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Adjust spacing */
+  margin: 25px;
+}
+
+/*------------------------------------------------------------------------------
+  Footer Styling
+------------------------------------------------------------------------------*/
+footer {
+  background: var(--color-foreground-dark);
+  color: var(--color-foreground-light);
+  text-align: center;
+  padding: 20px 0;
+  margin-top: auto; /* Keeps footer at the bottom */
+  width: 100%;
+}
+
+.footer-container {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Footer Links */
+.footer-links {
+  margin-bottom: 10px;
+}
+.footer-links a {
+  color: var(--color-foreground-light);
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.footer-links a:hover {
+  color: var(--main-color);
+}
+
+/* Footer Social Icons */
+.footer-social {
+  margin: 10px 0;
+}
+.footer-social a {
+  color: var(--color-foreground-light);
+  font-size: 24px;
+  margin: 0 10px;
+  transition: 0.3s;
+}
+.footer-social a:hover {
+  color: var(--main-color);
+}
+
+/* Footer Copyright */
+.footer-copy {
+  font-size: 14px;
+  margin-top: 10px;
+  opacity: 0.7;
+}
+
+/*------------------------------------------------------------------------------
+  Text Selection Highlight
+------------------------------------------------------------------------------*/
+::selection {
+  background: var(--main-color);
+  color: var(--color-foreground-light);
+}
+::-moz-selection {
+  background: var(--main-color);
+  color: var(--color-foreground-light);
+}
+
+/*------------------------------------------------------------------------------
+  Content Loader / Table Styling
+------------------------------------------------------------------------------*/
+table,
+th,
+td {
+  border: 0.5px solid lightgray;
+}
+
+td {
+  padding: 4px;
+}
+
+/* Loading Screen */
+#loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  border-radius: 10px; /* Optional rounded corners */
+}
+
+

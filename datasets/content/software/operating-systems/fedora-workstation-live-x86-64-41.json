@@ -1,0 +1,17 @@
+{
+    "name": "Fedora Workstation Live x86_64 41",
+    "year": 2025,
+    "developer": "Fedora Project",
+    "topic": "Software",
+    "category": "Operating Systems",
+    "type": "Linux",
+    "architecture": "x64",
+    "media_piece_path": "/content/software/operating-systems/fedora-workstation-live-x86-64-41.html",
+    "screenshot_path": "/media/content/software/operating-systems/fedora-workstation-live-x86-64-41.jpg",
+    "file_name": "fedora-workstation-live-x86-64-41.iso",
+    "file_size": 2.3,
+    "data_metric": "GB",
+    "source_link": "https://fedoraproject.org/workstation/download",
+    "download_link": null,
+    "magnet_link": "magnet:?xt=urn:btih:14806ad0b5a35e6e574cdbc12372be5f83e3ab73&dn=Fedora-Workstation-Live-x86_64-41"
+}

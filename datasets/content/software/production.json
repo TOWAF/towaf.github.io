@@ -1,0 +1,53 @@
+[
+    {
+        "name": "Blender",
+        "year": 2025,
+        "developer": "Blender Foundation",
+        "topic": "Software",
+        "category": "Production",
+        "type": "Graphics",
+        "architecture": "Many",
+        "media_piece_path": "/content/software/production/blender.html",
+        "screenshot_path": "/media/content/software/production/blender.jpg",
+        "file_name": "blender-4.3.2-os-architecture.xyz",
+        "file_size": null,
+        "data_metric": "MB",
+        "source_link": "https://www.blender.org/download/",
+        "download_link": null,
+        "magnet_link": null
+    },
+    {
+        "name": "LibreOffice 25.2.1",
+        "year": 2025,
+        "developer": "The Document Foundation",
+        "topic": "Software",
+        "category": "Production",
+        "type": "Documents",
+        "architecture": "Many",
+        "media_piece_path": "/content/software/production/libreoffice-25.2.1.html",
+        "screenshot_path": "/media/content/software/production/libreoffice-25.2.1.jpg",
+        "file_name": "libreoffice-25.2.1-os-architecture.xyz",
+        "file_size": null,
+        "data_metric": "MB",
+        "source_link": "https://www.libreoffice.org/download/download-libreoffice",
+        "download_link": null,
+        "magnet_link": null
+    },
+    {
+        "name": "PDFsam Basic",
+        "year": 2025,
+        "developer": "Andrea Vacondio",
+        "topic": "Software",
+        "category": "Production",
+        "type": "Documents",
+        "architecture": "Many",
+        "media_piece_path": "/content/software/production/pdfsam-basic.html",
+        "screenshot_path": "/media/content/software/production/pdfsam-basic.jpg",
+        "file_name": "pdfsam-basic-5.3.0-os-architecture.xyz",
+        "file_size": null,
+        "data_metric": "MB",
+        "source_link": "https://pdfsam.org/download-pdfsam-basic/",
+        "download_link": null,
+        "magnet_link": null
+    }
+]

@@ -1,0 +1,7 @@
+White: rgb(255, 255, 255)
+
+Dark White: rgb(240, 240, 240)
+
+Dark: rgb(32, 32, 32)
+
+Orange: rgb(224, 128, 64)

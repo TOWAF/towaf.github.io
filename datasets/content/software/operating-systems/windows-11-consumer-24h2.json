@@ -1,0 +1,17 @@
+{
+    "name": "Windows 11 Consumer 24H2",
+    "year": 2024,
+    "developer": "Microsoft",
+    "topic": "Software",
+    "category": "Operating Systems",
+    "type": "Windows",
+    "architecture": "x64",
+    "media_piece_path": "/content/software/operating-systems/windows-11-consumer-24h2.html",
+    "screenshot_path": "/media/content/software/operating-systems/windows-11-consumer-24h2.jpg",
+    "file_name": "win11-24h2-englishinternational-x64.iso",
+    "file_size": 5.8,
+    "data_metric": "GB",
+    "source_link": "https://www.microsoft.com/en-gb/software-download/windows11",
+    "download_link": null,
+    "magnet_link": null
+}

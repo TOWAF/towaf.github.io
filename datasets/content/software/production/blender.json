@@ -1,0 +1,17 @@
+{
+    "name": "Blender",
+    "year": 2025,
+    "developer": "Blender Foundation",
+    "topic": "Software",
+    "category": "Production",
+    "type": "Graphics",
+    "architecture": "Many",
+    "media_piece_path": "/content/software/production/blender.html",
+    "screenshot_path": "/media/content/software/production/blender.jpg",
+    "file_name": "blender-4.3.2-os-architecture.xyz",
+    "file_size": null,
+    "data_metric": "MB",
+    "source_link": "https://www.blender.org/download/",
+    "download_link": null,
+    "magnet_link": null
+}

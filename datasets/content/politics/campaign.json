@@ -1,0 +1,19 @@
+[
+    {
+        "name": "Midterm Election Rally",
+        "year": 2026,
+        "politician": "Various Candidates",
+        "topic": "Politics",
+        "category": "Campaign",
+        "type": "Rally",
+        "news_company": "CNN",
+        "media_piece_path": "/content/politics/campaign/midterm-election-rally.html",
+        "screenshot_path": "/media/content/politics/campaign/midterm-election-rally.jpg",
+        "file_name": null,
+        "file_size": null,
+        "data_metric": null,
+        "source_link": null,
+        "download_link": null,
+        "magnet_link": null
+    }
+]
