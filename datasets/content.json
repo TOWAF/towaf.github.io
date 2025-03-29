@@ -9,12 +9,21 @@
         "publisher": null,
         "media_piece_path": "/content/documents/books/1984.html",
         "screenshot_path": "/media/content/documents/books/1984.jpg",
+<<<<<<< HEAD
         "file_name": null,
         "file_size": null,
         "data_metric": "MB",
         "source_link": null,
         "download_link": null,
         "magnet_link": null
+=======
+        "file_name": "1984.pdf",
+        "file_size": null,
+        "data_metric": "MB",
+        "source_link": "https://archive.org/details/GeorgeOrwells1984",
+        "download_link": null,
+        "magnet_link": "magnet:?xt=urn:btih:ee228fee5f1e4e158a360b0d1f9fa6308dc5b897&dn=GeorgeOrwells1984&ws=http://ia601300.us.archive.org/28/items/&ws=http://ia801300.us.archive.org/28/items/&ws=https://archive.org/download/"
+>>>>>>> fa5941a (Website 29.03 20.35)
     },
     {
         "name": "Advanced Calculus: Integrations",
@@ -434,7 +443,11 @@
         "publisher": null,
         "media_piece_path": "/content/documents/books/the-wizard-of-oz-collection.html",
         "screenshot_path": "/media/content/documents/books/the-wizard-of-oz-collection.jpg",
+<<<<<<< HEAD
         "file_name": null,
+=======
+        "file_name": "many",
+>>>>>>> fa5941a (Website 29.03 20.35)
         "file_size": null,
         "data_metric": "GB",
         "source_link": "https://archive.org/embed/the-wizard-of-oz-a-complete-public-domain-collection",
@@ -469,9 +482,15 @@
         "media_piece_path": "/content/software/operating-systems/windows-10-consumer-22h2.html",
         "screenshot_path": "/media/content/software/operating-systems/windows-10-consumer-22h2.jpg",
         "file_name": "en-us-windows-10-consumer-editions-version-22h2-updated-nov-2024-x64-dvd-3eeacab9.iso",
+<<<<<<< HEAD
         "file_size": null,
         "data_metric": "GB",
         "source_link": null,
+=======
+        "file_size": 7.2,
+        "data_metric": "GB",
+        "source_link": "https://drive.massgrave.dev/en-us_windows_10_consumer_editions_version_22h2_updated_nov_2024_x64_dvd_3eeacab9.iso",
+>>>>>>> fa5941a (Website 29.03 20.35)
         "download_link": null,
         "magnet_link": null
     },
