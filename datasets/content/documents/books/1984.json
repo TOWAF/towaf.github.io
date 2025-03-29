@@ -8,19 +8,10 @@
     "publisher": null,
     "media_piece_path": "/content/documents/books/1984.html",
     "screenshot_path": "/media/content/documents/books/1984.jpg",
-<<<<<<< HEAD
     "file_name": null,
     "file_size": null,
     "data_metric": "MB",
     "source_link": null,
     "download_link": null,
     "magnet_link": null
-=======
-    "file_name": "1984.pdf",
-    "file_size": null,
-    "data_metric": "MB",
-    "source_link": "https://archive.org/details/GeorgeOrwells1984",
-    "download_link": null,
-    "magnet_link": "magnet:?xt=urn:btih:ee228fee5f1e4e158a360b0d1f9fa6308dc5b897&dn=GeorgeOrwells1984&ws=http://ia601300.us.archive.org/28/items/&ws=http://ia801300.us.archive.org/28/items/&ws=https://archive.org/download/"
->>>>>>> fa5941a (Website 29.03 20.35)
 }

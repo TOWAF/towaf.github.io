@@ -61,15 +61,9 @@
         "media_piece_path": "/content/software/operating-systems/windows-10-consumer-22h2.html",
         "screenshot_path": "/media/content/software/operating-systems/windows-10-consumer-22h2.jpg",
         "file_name": "en-us-windows-10-consumer-editions-version-22h2-updated-nov-2024-x64-dvd-3eeacab9.iso",
-<<<<<<< HEAD
         "file_size": null,
         "data_metric": "GB",
         "source_link": null,
-=======
-        "file_size": 7.2,
-        "data_metric": "GB",
-        "source_link": "https://drive.massgrave.dev/en-us_windows_10_consumer_editions_version_22h2_updated_nov_2024_x64_dvd_3eeacab9.iso",
->>>>>>> fa5941a (Website 29.03 20.35)
         "download_link": null,
         "magnet_link": null
     },
