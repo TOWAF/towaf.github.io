@@ -139,7 +139,7 @@ a.active {
   margin: 0 auto; /* Centers the button */
 }
 
-@media (max-width: 425px) { /* Bootstrap's breakpoint for phones */
+@media (max-width: 395px) { /* Bootstrap's breakpoint for phones */
   .btn.btn-primary.btn-lg {
     max-width:min-content;
   }

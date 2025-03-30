@@ -1,7 +1,22 @@
 // Find media piece and render page
 
-// List of link keys that will be used to generate link buttons.
-const linkKeys = ["source_link", "download_link", "magnet_link"];
+const linkMappings = [
+  { 
+    key: "source_link",
+    displayName: "Origin",
+    iconClass: "fa-solid fa-globe"
+  },
+  { 
+    key: "download_link",
+    displayName: "Download",
+    iconClass: "fa-solid fa-download"
+  },
+  { 
+    key: "magnet_link",
+    displayName: "Magnet",
+    iconClass: "fa-solid fa-magnet"
+  }
+];
 
 /**
  * getJsonFilePath()
@@ -67,7 +82,7 @@ function createCard(data) {
   const keys = Object.keys(data);
 
   // Filter out keys you want to exclude from the table display.
-  const filteredKeys = keys.filter(key => !["id", "name", "media_piece_path", "screenshot_path"].includes(key) && !linkKeys.includes(key));
+  const filteredKeys = keys.filter(key => !["id", "name", "media_piece_path", "screenshot_path", "source_link", "download_link", "magnet_link"].includes(key) && !linkMappings.includes(key));
 
   // For each key in the data, add a row to the table.
   filteredKeys.forEach(field => {
@@ -113,25 +128,34 @@ function createCard(data) {
   const linksDiv = document.createElement('div');
   linksDiv.className = 'button-container';
 
-  // Create a button for each link key.
-  linkKeys.forEach(key => {
-    const url = data[key]; // Get the URL from the JSON data.
+  // Create a button for each link type (with icons and custom labels)
+  linkMappings.forEach(({ key, displayName, iconClass }) => {
+    const url = data[key];
     const a = document.createElement('a');
-    a.className = 'btn btn-primary btn-lg'; // Base button styles
+    a.className = 'btn btn-primary btn-lg';
+
+    // Add icon
+    const icon = document.createElement('i');
+    icon.className = `${iconClass} me-2`; // me-2 adds right margin
+    a.appendChild(icon);
+
+    // Add text
+    const strong = document.createElement('strong');
+    strong.textContent = displayName;
+    a.appendChild(strong);
 
     if (url) {
       a.href = url;
-      a.target = '_blank';
+      // Open source links in new tab, download links in same tab
+      a.target = key === 'source_link' ? '_blank' : '_self';
+      if (key === 'download_link') {
+        a.setAttribute('download', ''); // Forces download instead of navigation
+      }
     } else {
       a.href = "#";
       a.classList.add("disabled");
       a.setAttribute("aria-disabled", "true");
     }
-
-    // Create a <strong> element for the button text.
-    const strong = document.createElement('strong');
-    strong.textContent = capitalizeWords(key.replace(/_/g, ' '));
-    a.appendChild(strong);
 
     linksDiv.appendChild(a);
   });
@@ -167,19 +191,6 @@ function createCard(data) {
   card.appendChild(cardBody);
 
   return card;
-}
-
-/**
- * showLoadingScreen()
- * ---------------------
- * Displays a loading screen inside the element with class "media-piece-search"
- * while data is being fetched.
- */
-function showLoadingScreen() {
-  const container = document.querySelector('.media-piece-search');
-  if (container) {
-    container.innerHTML = ``;
-  }
 }
 
 /**
@@ -226,6 +237,30 @@ function loadFragmentData() {
         </div>`;
       }
     });
+}
+
+
+/**
+ * showLoadingScreen()
+ * ---------------------
+ * Displays a loading screen inside the element with class "media-piece-search"
+ * while data is being fetched.
+ */
+function showLoadingScreen() {
+  const container = document.querySelector('.media-piece-search');
+  if (container) {
+    container.innerHTML = `        
+        <div id="loading-screen">
+          <img src="/media/towaf/gifs/loading.gif" alt="Loading...">
+        </div>
+        <div id="loading-screen">
+          <img src="/media/towaf/gifs/loading.gif" alt="Loading...">
+        </div>
+        <div id="loading-screen">
+          <img src="/media/towaf/gifs/loading.gif" alt="Loading...">
+        </div>
+        `;
+  }
 }
 
 document.addEventListener('DOMContentLoaded', loadFragmentData);

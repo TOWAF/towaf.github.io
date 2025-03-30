@@ -157,7 +157,7 @@ function setupSearch() {
 function showLoadingScreen() {
   const loadingScreen = document.getElementById("loading-screen");
   if (loadingScreen) {
-    loadingScreen.style.display = "block";  // Show the loading screen.
+    loadingScreen.innerHTML = ``;
   }
 }
 

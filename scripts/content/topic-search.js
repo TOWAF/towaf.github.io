@@ -41,16 +41,23 @@ function getCategoriesJsonFilePath() {
  * icon or presses Enter, it displays all entries. The clear icon clears the input
  * and removes all displayed cards.
  */
-function setupSearch(jsonUrl) {
-  const searchInput = document.getElementById("topicSearch");
-  const container = document.querySelector(".topic-search");
-  const searchIcon = document.getElementById("search-icon");
-  const clearIcon = document.getElementById("clear-icon");
+  function setupSearch(jsonUrl) {
+    const searchInput = document.getElementById("topicSearch");
+    const container = document.querySelector(".topic-search");
+    const searchIcon = document.getElementById("search-icon");
+    const clearIcon = document.getElementById("clear-icon");
 
-  if (!searchInput || !container) return;
+    if (!searchInput || !container) return;
 
-  let dataLoaded = false;
-  let allData = [];
+    // New focus handler
+    searchInput.addEventListener("focus", () => {
+      if (!dataLoaded) {
+        performSearch(true); // Load data on first interaction
+      }
+    });
+
+    let dataLoaded = false;
+    let allData = [];
 
   // Function that performs the search.
   // If force is true, a search is triggered even if the input is empty (showing all results).
