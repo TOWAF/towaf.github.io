@@ -65,7 +65,7 @@ function createCategoryCard(entry) {
   const nameCol = document.createElement('div');
   nameCol.className = 'col-12 text-start';
   const nameLink = document.createElement('a');
-  nameCol.style.padding = '6px 18px 3px 18px';
+  nameCol.style.padding = '3px 18px 3px 18px';
   nameLink.href = entry.media_piece_path;
   // Use the "card-title", "no-underline", and "content-paragraph" classes.
   nameLink.className = 'card-title no-underline content-paragraph';
@@ -82,7 +82,6 @@ function createCategoryCard(entry) {
   // --- Bottom Row: Type, File Size, and Year ---
   const bottomRow = document.createElement('div');
   bottomRow.className = 'row mt-0';
-  // Set vertical padding to 6px (0 on left/right if desired)
 
   const typeCol = document.createElement('div');
   typeCol.className = 'col-6 text-start content-paragraph';
@@ -97,7 +96,7 @@ function createCategoryCard(entry) {
   if (entry.file_size && entry.data_metric) {
     fileSizeText = entry.file_size + " " + entry.data_metric;
   } else if (entry.data_metric) {
-    fileSizeText = entry.data_metric;
+    fileSizeText = "N/A" + " " + entry.data_metric;
   }
   sizeCol.textContent = fileSizeText;
   bottomRow.appendChild(sizeCol);
