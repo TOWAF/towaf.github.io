@@ -91,7 +91,7 @@ function createCard(data) {
 
     const tr = document.createElement('tr');
     const tdLabel = document.createElement('td');
-    tdLabel.style.width = '30%';
+    tdLabel.style.width = '35%';
     tdLabel.className = 'content-paragraph';
     const labelStrong = document.createElement('strong');
     // For "file_size", display label as "File Size".

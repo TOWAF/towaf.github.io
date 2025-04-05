@@ -120,12 +120,13 @@ def cleanup_orphan_files(directory, expected_files):
 
 def cleanup_orphan_folders(output_base_path, active_topic_slugs, active_categories_by_topic_slug):
     """
-    Cleans up orphaned topic folders, category folders, and aggregated category JSON files
-    based on active slugs from the database. Targets the dataset directory structure.
+    Cleans up orphaned topic folders, category folders, topic aggregate JSON files (at base level),
+    and aggregated category JSON files (within topic folders) based on active slugs.
+    Targets the dataset directory structure.
 
     Args:
         output_base_path (str): The base path where topic folders are located (e.g., './datasets/content').
-        active_topic_slugs (set): A set of all topic slugs currently found in the database.
+        active_topic_slugs (set): A set of topic slugs that actually have entries in the database.
         active_categories_by_topic_slug (dict): A dictionary where keys are active topic slugs
                                                 and values are sets of active category slugs
                                                 for that topic.
@@ -136,50 +137,53 @@ def cleanup_orphan_folders(output_base_path, active_topic_slugs, active_categori
         print(f"Error: Output base path '{output_base_path}' does not exist.")
         return
 
-    # 1. Cleanup Orphan Topic Folders
-    topic_items_to_check = []
+    # 1. Cleanup Orphan Topic Folders & Orphaned Topic Aggregate JSONs at Base Level
+    items_at_base = []
     try:
         for item_name in os.listdir(output_base_path):
             item_path = os.path.join(output_base_path, item_name)
-            # Check if it's a directory AND not a special file/folder
-            # Also ignore top-level json files like topics.json, content.json
-            known_non_topic_items = ['templates', 'topics.json', 'content.json']
-            if os.path.isdir(item_path) and item_name not in known_non_topic_items:
-                 topic_items_to_check.append((item_name, item_path))
-            # Check for orphaned topic aggregate JSON files (e.g., videos.json)
+            known_non_topic_items = ['templates', 'topics.json', 'content.json'] # Base level files/dirs to ignore
+            if item_name in known_non_topic_items:
+                continue
+
+            if os.path.isdir(item_path):
+                 items_at_base.append(("folder", item_name, item_path))
             elif os.path.isfile(item_path) and item_name.endswith(".json"):
-                 expected_topic_slug = item_name[:-5] # Remove .json
-                 if expected_topic_slug not in active_topic_slugs and item_name not in known_non_topic_items:
-                     print(f"Identified orphaned topic aggregate JSON file: {item_path}")
-                     try:
-                         os.remove(item_path)
-                         print(f"Deleted orphaned topic aggregate JSON file: {item_path}")
-                     except OSError as e:
-                         print(f"Error deleting topic aggregate JSON file {item_path}: {e}")
+                 # Collect potential topic aggregate JSON files at base level
+                 items_at_base.append(("file", item_name, item_path))
 
     except Exception as e:
         print(f"Error scanning topic level items in {output_base_path}: {e}")
         return
 
-    # Check collected directories against active topic slugs
-    for topic_slug, item_path in topic_items_to_check:
-        if topic_slug not in active_topic_slugs:
-            print(f"Identified orphaned topic folder: {item_path}")
-            try:
-                shutil.rmtree(item_path)
-                print(f"Deleted orphaned topic folder: {item_path}")
-            except OSError as e:
-                print(f"Error deleting topic folder {item_path}: {e}")
+    # Check collected items against active topic slugs
+    for item_type, item_name, item_path in items_at_base:
+        potential_topic_slug = item_name if item_type == "folder" else item_name[:-5] # Get slug from folder or file name
 
-    # 2. Cleanup Orphan Category Folders & Aggregated Category JSONs (within active topic folders)
-    for topic_slug in active_topic_slugs:
+        if potential_topic_slug not in active_topic_slugs:
+            if item_type == "folder":
+                try:
+                    shutil.rmtree(item_path)
+                    print(f"Deleted orphaned topic folder: {item_path}")
+                except OSError as e:
+                    print(f"Error deleting topic folder {item_path}: {e}")
+            elif item_type == "file":
+                 try:
+                     os.remove(item_path)
+                     print(f"Deleted orphaned topic aggregate JSON file: {item_path}")
+                 except OSError as e:
+                     print(f"Error deleting topic aggregate JSON file {item_path}: {e}")
+
+
+    # 2. Cleanup Orphan Category Folders & Aggregated Category JSONs (within *active* topic folders)
+    for topic_slug in active_topic_slugs: # Only iterate through topics confirmed to have data
         topic_folder_path = os.path.join(output_base_path, topic_slug)
         if not os.path.isdir(topic_folder_path):
             continue # Skip if the active topic folder doesn't exist
 
         active_category_slugs_for_topic = active_categories_by_topic_slug.get(topic_slug, set())
         category_folders_to_check = []
-        files_in_topic_folder = []
+        files_in_topic_folder = [] # JSON files like category aggregates and category lists
         try:
             for item_name in os.listdir(topic_folder_path):
                 item_path = os.path.join(topic_folder_path, item_name)
@@ -193,31 +197,34 @@ def cleanup_orphan_folders(output_base_path, active_topic_slugs, active_categori
             print(f"Error scanning items in {topic_folder_path}: {e}")
             continue # Skip this topic if we can't scan it
 
-        # Check collected directories against active category slugs for this topic
+        # Check collected directories (category folders) against active category slugs for this topic
         for category_slug, item_path in category_folders_to_check:
             if category_slug not in active_category_slugs_for_topic:
-                print(f"Identified orphaned category folder: {item_path}")
                 try:
                     shutil.rmtree(item_path)
                     print(f"Deleted orphaned category folder: {item_path}")
                 except OSError as e:
                     print(f"Error deleting category folder {item_path}: {e}")
 
-        # Check collected JSON files against active category slugs for this topic
+        # Check collected JSON files (aggregated category jsons) against active category slugs
         category_list_filename = f"{topic_slug}-categories.json"
+        # topic_aggregate_filename = f"{topic_slug}.json" # No longer needed here as it's at base level
+
         for filename, item_path in files_in_topic_folder:
+            # Use if/elif/else structure for clarity
             if filename == category_list_filename:
                 continue # Skip the category list file itself
-
-            # Assume other json files are aggregated category files (e.g., comedy.json)
-            potential_category_slug = filename[:-5] # Remove .json
-            if potential_category_slug not in active_category_slugs_for_topic:
-                print(f"Identified orphaned aggregated category JSON file: {item_path}")
-                try:
-                    os.remove(item_path)
-                    print(f"Deleted orphaned aggregated category JSON file: {item_path}")
-                except OSError as e:
-                    print(f"Error deleting aggregated category JSON file {item_path}: {e}")
+            # elif filename == topic_aggregate_filename: # Removed this check
+            #     continue # Skip the main topic aggregate file (now at base level)
+            else:
+                # Assume remaining json files are aggregated category files (e.g., comedy.json)
+                potential_category_slug = filename[:-5] # Remove .json
+                if potential_category_slug not in active_category_slugs_for_topic:
+                    try:
+                        os.remove(item_path)
+                        print(f"Deleted orphaned aggregated category JSON file: {item_path}")
+                    except OSError as e:
+                        print(f"Error deleting aggregated category JSON file {item_path}: {e}")
 
 
     print(f"Orphan Folder & File Cleanup Finished for base path: {output_base_path}")
@@ -227,30 +234,25 @@ def cleanup_orphan_folders(output_base_path, active_topic_slugs, active_categori
 
 def process_table_from_sqlite(conn, table_name, output_base_datasets, blacklist_keys):
     """
-    Process a table from the SQLite database:
-      1. Gets column names and primary keys.
-      2. Fetches rows, converts to dictionaries.
-      3. Normalizes values, slugifies names/categories, auto-fills paths.
-      4. **Slugifies the 'file_name' field if it exists.**
-      5. Filters out blacklisted/primary keys.
-      6. Groups filtered entries by original category name.
-      7. Writes individual and aggregated JSON files to the datasets path.
-      8. Cleans up orphaned JSON files in category directories.
+    Process a table from the SQLite database. Includes file_name slugification.
+    Writes topic aggregate JSON to the base dataset directory.
     Returns a list of all processed (full, not filtered) entries
     and a set of active category slugs found in this table.
     """
     cur = conn.cursor()
+    topic_slug = slugify(table_name) # Define topic slug early
+    topic_folder_base = os.path.join(output_base_datasets, topic_slug) # Define topic folder path
+
     try:
         cur.execute(f"PRAGMA table_info({table_name});")
         columns_info = cur.fetchall()
     except sqlite3.Error as e:
         print(f"Error getting table info for {table_name}: {e}")
-        return [], set()
+        return [], set() # Return empty on error
 
     columns = [col[1] for col in columns_info]
     print(f"\nProcessing table '{table_name}' with columns: {columns}")
     primary_keys = [col[1] for col in columns_info if col[5] > 0]
-    # print(f"Primary key columns for table '{table_name}': {primary_keys}") # Less verbose
     keys_to_remove = set(blacklist_keys) | set(primary_keys)
 
     try:
@@ -258,8 +260,17 @@ def process_table_from_sqlite(conn, table_name, output_base_datasets, blacklist_
         rows = cur.fetchall()
     except sqlite3.Error as e:
         print(f"Error fetching rows from {table_name}: {e}")
-        return [], set()
+        return [], set() # Return empty on error
 
+    # If no rows, return early before creating directories/files unnecessarily
+    if not rows:
+        print(f"No entries found in table '{table_name}'.")
+        # Write an empty list to the topic aggregate file at the BASE level
+        table_output_file = os.path.join(output_base_datasets, f"{topic_slug}.json")
+        write_file_if_different(table_output_file, "[]") # Write empty JSON array
+        return [], set() # Return empty lists/sets
+
+    # Process Rows
     all_entries_full = []
     all_entries_filtered = []
     data_by_category_filtered = {}
@@ -268,53 +279,53 @@ def process_table_from_sqlite(conn, table_name, output_base_datasets, blacklist_
     for row in rows:
         entry = {col: normalize_value(row[idx]) for idx, col in enumerate(columns)}
 
-        # Apply slugify to file_name if it exists
-        if entry.get("file_name"): # Check if key exists and value is not None
-            original_filename = entry["file_name"]
-            entry["file_name"] = slugify(original_filename)
-            # Optional: Print if filename changed
-            # if original_filename != entry["file_name"]:
-            #     print(f"Slugified filename: '{original_filename}' -> '{entry['file_name']}'")
-        # End of file_name slugification
+        # Slugify file_name if present
+        if entry.get("file_name"):
+            entry["file_name"] = slugify(entry["file_name"])
 
+        # Get original values, providing defaults
         entry_name_original = entry.get("name") or "unknown-name"
-        entry_topic_original = entry.get("topic") or table_name
+        entry_topic_original = entry.get("topic") or table_name # Default topic to table name
         entry_category_original = entry.get("category") or "unknown-category"
 
-        # Store original values before potentially overwriting with slugs if needed elsewhere
-        # entry["name_original"] = entry_name_original # Example if needed
-        entry["name"] = entry_name_original # Keep original case for display? Or use slug? Depends on need.
+        # Store originals/defaults back into entry for consistency
+        entry["name"] = entry_name_original
         entry["topic"] = entry_topic_original
         entry["category"] = entry_category_original
 
-        topic_slug = slugify(entry_topic_original)
+        # Generate slugs needed for paths/grouping
+        # topic_slug = slugify(entry_topic_original) # Already defined above
         category_slug = slugify(entry_category_original) if entry_category_original and entry_category_original.lower() != "unknown" else "unknown-categories"
         name_slug = slugify(entry_name_original)
 
+        # Track active category slugs for this topic
         active_category_slugs_in_table.add(category_slug)
 
-        # Generate relative paths for JSON data structure consistency
+        # Generate relative paths for HTML links (these don't affect JSON generation path)
         entry["media_piece_path"] = f"/content/{topic_slug}/{category_slug}/{name_slug}.html"
         if not entry.get("screenshot_path"):
              entry["screenshot_path"] = f"/media/content/{topic_slug}/{category_slug}/{name_slug}.jpg"
 
+        # Collect entries
         all_entries_full.append(entry.copy())
         filtered_entry = filter_entry(entry, keys_to_remove)
         all_entries_filtered.append(filtered_entry)
 
+        # Group filtered entries by original category name
         cat_key_grouping = entry_category_original if entry_category_original and entry_category_original.lower() != "unknown" else "unknown-category"
         data_by_category_filtered.setdefault(cat_key_grouping, []).append(filtered_entry)
 
-    # Write aggregated JSON for the entire table/topic (filtered)
+    # Write Aggregated Topic File (Filtered Entries)
+    # Ensure topic folder exists (for category files later)
+    os.makedirs(topic_folder_base, exist_ok=True)
+    # Write the topic aggregate file to the BASE dataset directory
     all_entries_filtered.sort(key=lambda e: e.get("name", "").lower())
-    table_output_file = os.path.join(output_base_datasets, f"{slugify(table_name)}.json")
+    table_output_file = os.path.join(output_base_datasets, f"{topic_slug}.json") # Changed path
     content_str = json.dumps(all_entries_filtered, indent=4)
     write_file_if_different(table_output_file, content_str)
 
-    # Process each category for individual and aggregated JSON files
+    # Process Each Category
     processed_categories_slugs = set()
-    topic_folder_base = os.path.join(output_base_datasets, slugify(table_name)) # Base folder for this topic
-
     for cat_original_key, entries_filtered in data_by_category_filtered.items():
         entries_filtered.sort(key=lambda e: e.get("name", "").lower())
         cat_slug = slugify(cat_original_key) if cat_original_key.lower() != "unknown-category" else "unknown-categories"
@@ -326,7 +337,6 @@ def process_table_from_sqlite(conn, table_name, output_base_datasets, blacklist_
 
         expected_json_files = set() # Files expected within the category sub-folder
         for entry_filtered in entries_filtered:
-            # Use the 'name' field from the filtered entry for the filename slug
             entry_name_for_file = entry_filtered.get("name", "unknown-name")
             file_name_slug = slugify(entry_name_for_file)
             filename = f"{file_name_slug}.json"
@@ -359,21 +369,31 @@ def generate_category_lists(global_entries, output_base_datasets):
         topic_original = entry.get("topic") or "unknown-topic"
         category_original = entry.get("category") or "unknown-category"
         topic_slug = slugify(topic_original)
-        categories_by_topic_slug.setdefault(topic_slug, set()).add(category_original)
+        # Only add non-empty/non-default category names to the list
+        if category_original and category_original != "unknown-category":
+            categories_by_topic_slug.setdefault(topic_slug, set()).add(category_original)
 
     for topic_slug, categories_set in categories_by_topic_slug.items():
+        # Only generate category list if there are actual categories
+        if not categories_set:
+            # If no active categories, we might want to remove an existing category list file
+            topic_folder = os.path.join(output_base_datasets, topic_slug)
+            output_file = os.path.join(topic_folder, f"{topic_slug}-categories.json")
+            if os.path.exists(output_file):
+                try:
+                    os.remove(output_file)
+                    print(f"Deleted empty/orphaned category list file: {output_file}")
+                except OSError as e:
+                    print(f"Error deleting empty/orphaned category list file {output_file}: {e}")
+            continue # Skip writing if no categories
+
         topic_folder = os.path.join(output_base_datasets, topic_slug)
-        os.makedirs(topic_folder, exist_ok=True)
+        os.makedirs(topic_folder, exist_ok=True) # Ensure topic folder exists
 
         output_file = os.path.join(topic_folder, f"{topic_slug}-categories.json")
-
-        valid_categories = {cat for cat in categories_set if cat and cat != 'unknown-category'} # Exclude default/empty
-        category_list_sorted = sorted(list(valid_categories))
-
+        category_list_sorted = sorted(list(categories_set)) # Already filtered above
         content_str = json.dumps(category_list_sorted, indent=4)
         write_file_if_different(output_file, content_str)
-        # Only print if the file was actually written (Removed print for cleaner logs)
-        # if wrote_file: print(f"Written category list for topic '{topic_slug}': {output_file}")
 
 def generate_topics_list(global_entries, output_base_datasets):
     """
@@ -387,8 +407,6 @@ def generate_topics_list(global_entries, output_base_datasets):
     output_file = os.path.join(output_base_datasets, "topics.json")
     content_str = json.dumps(topics_list_sorted, indent=4)
     write_file_if_different(output_file, content_str)
-    # Only print if the file was actually written (Removed print for cleaner logs)
-    # if wrote_file: print(f"Written topics list: {output_file}")
 
 # Main Execution Logic
 
@@ -428,21 +446,22 @@ def main():
         return
 
     global_entries = []
-    all_active_topic_slugs = set()
+    all_active_topic_slugs = set() # Populate ONLY if topic has entries
     all_active_categories_by_topic_slug = {} # Maps topic_slug -> set(category_slugs)
 
     for table_name in tables:
-        topic_slug_for_table = slugify(table_name)
-        all_active_topic_slugs.add(topic_slug_for_table)
-
+        # Process table, get back full entries and active category slugs for THIS table/topic
         entries_full, active_cat_slugs = process_table_from_sqlite(conn, table_name, output_base_datasets, blacklist_keys)
 
+        # Crucial Change: Only consider topic/categories active if entries exist
         if entries_full:
+            topic_slug_for_table = slugify(table_name) # Determine slug based on table name
+            all_active_topic_slugs.add(topic_slug_for_table) # Add topic slug ONLY if entries_full is not empty
             global_entries.extend(entries_full)
+            # Store the active category slugs under the correct topic slug
             all_active_categories_by_topic_slug.setdefault(topic_slug_for_table, set()).update(active_cat_slugs)
-        else:
-             # Ensure topic slug exists in dict even if table is empty
-             all_active_categories_by_topic_slug.setdefault(topic_slug_for_table, set())
+        # else: # If entries_full is empty, do nothing - topic/categories are not active
+            # print(f"Skipping topic '{table_name}' for active tracking as it has no entries.")
 
     # Aggregation and Global Lists
     if global_entries:
@@ -455,16 +474,23 @@ def main():
         # else: # Less verbose log
         #      print(f"\nUniversal dataset file {universal_file} is up-to-date ({len(global_entries)} entries).")
 
+        # Generate lists based on the entries that were actually found
         generate_category_lists(global_entries, output_base_datasets)
         generate_topics_list(global_entries, output_base_datasets)
     else:
-        print("\nNo entries found in the database. Skipping global file generation and cleanup.")
+        print("\nNo entries found in any database table. Skipping global file generation and cleanup.")
+        # If no entries at all, clean up topics.json and content.json if they exist
+        universal_file = os.path.join(script_dir, "content.json")
+        topics_file = os.path.join(output_base_datasets, "topics.json")
+        if os.path.exists(universal_file): os.remove(universal_file); print(f"Deleted empty {universal_file}")
+        if os.path.exists(topics_file): os.remove(topics_file); print(f"Deleted empty {topics_file}")
+
 
     # Cleanup Phase
-    # Only run cleanup if there were active topics identified
-    if all_active_topic_slugs:
-        # Cleanup dataset folders and aggregated category json files
-        cleanup_orphan_folders(output_base_datasets, all_active_topic_slugs, all_active_categories_by_topic_slug)
+    # Always run cleanup, even if no entries, to remove all topic folders/files if db is empty
+    print("\nRunning cleanup phase...")
+    cleanup_orphan_folders(output_base_datasets, all_active_topic_slugs, all_active_categories_by_topic_slug)
+
 
     # Close the database connection
     if conn:

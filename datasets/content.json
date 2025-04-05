@@ -396,6 +396,28 @@
         "crc32": null
     },
     {
+        "science_id": 1,
+        "name": "test name",
+        "year": 9999,
+        "scientist": "Bill Nye",
+        "topic": "Science",
+        "category": "Chemistry",
+        "type": "Explosives",
+        "institution": "Disney channel",
+        "media_piece_path": "/content/science/chemistry/test-name.html",
+        "screenshot_path": "/media/content/science/chemistry/test-name.jpg",
+        "file_name": null,
+        "file_size": null,
+        "data_metric": null,
+        "source_link": null,
+        "download_link": null,
+        "magnet_link": null,
+        "sha256": null,
+        "sha1": null,
+        "md5": null,
+        "crc32": null
+    },
+    {
         "software_id": 8,
         "name": "AmigaOS 4.1",
         "year": 2021,
