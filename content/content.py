@@ -1,11 +1,10 @@
-import os
-import json
-import re
-import hashlib
-import shutil # Import shutil for removing non-empty directories
+import os # Provides functions for interacting with the operating system (e.g., file and directory operations)
+import json # Allows for easy encoding and decoding of JSON data
+import re # Offers regular expression support for advanced string searching and manipulation
+import hashlib # Contains algorithms for secure hashing (e.g., SHA, MD5) for data integrity and verification
+import shutil # Enables high-level file operations such as copying and removing files/directories 
 
-# --- Utility Functions ---
-
+# Utility Functions
 def slugify(text):
     """
     Convert a string into a file-friendly slug.
@@ -64,7 +63,7 @@ def write_file(file_path, content_str):
         wrote_file = False
     return wrote_file
 
-
+# Cleanup Functions
 def cleanup_html_content_files(expected_files_by_dir):
     """
     Iterate through the expected files dictionary and clean up orphaned HTML files.
@@ -104,8 +103,7 @@ def cleanup_orphan_content_folders(output_base_path, active_topic_slugs, active_
     Args:
         output_base_path (str): The base path where topic folders are located (e.g., './content').
         active_topic_slugs (set): A set of all topic slugs derived from content.json.
-        active_categories_by_topic_slug (dict): A dictionary mapping active topic slugs
-                                                to sets of active category slugs for that topic.
+        active_categories_by_topic_slug (dict): A dictionary mapping active topic slugs to sets of active category slugs for that topic.
     """
     print(f"\nStarting Orphan Folder Cleanup")
 
@@ -113,7 +111,7 @@ def cleanup_orphan_content_folders(output_base_path, active_topic_slugs, active_
         print(f"Error: Output base path '{output_base_path}' does not exist.")
         return
 
-    # --- 1. Cleanup Orphan Topic Folders ---
+    # 1. Cleanup Orphan Topic Folders
     topic_items_to_check = []
     try:
         for item_name in os.listdir(output_base_path):
@@ -144,7 +142,7 @@ def cleanup_orphan_content_folders(output_base_path, active_topic_slugs, active_
             except OSError as e:
                 print(f"Error deleting topic folder {item_path}: {e}")
 
-    # --- 2. Cleanup Orphan Category Folders (within remaining active topic folders) ---
+    # 2. Cleanup Orphan Category Folders (within remaining active topic folders)
     for topic_slug in active_topic_slugs:
         topic_folder_path = os.path.join(output_base_path, topic_slug)
         if not os.path.isdir(topic_folder_path):
@@ -181,7 +179,7 @@ def cleanup_orphan_content_folders(output_base_path, active_topic_slugs, active_
 
     print(f"Orphan Folder Cleanup Finished")
 
-
+# Data Processing Functions
 def load_database(db_path):
     """
     Load the JSON dataset from the given path (content.json).
@@ -214,6 +212,7 @@ def load_template(template_path):
         return None
 
 
+# Generation Functions
 def generate_media_html(entry, template):
     """
     Replace placeholders in the media-piece template with entry data.

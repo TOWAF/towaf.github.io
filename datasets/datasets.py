@@ -1,12 +1,11 @@
-import os
-import json
-import re
-import hashlib
-import sqlite3
-import shutil # Use shutil for removing non-empty directories
+import os # Provides functions for interacting with the operating system (e.g., file and directory operations)
+import json # Allows for easy encoding and decoding of JSON data
+import re # Offers regular expression support for advanced string searching and manipulation
+import hashlib # Contains algorithms for secure hashing (e.g., SHA, MD5) for data integrity and verification
+import sqlite3 # Provides a lightweight disk-based database that doesn’t require a separate server process
+import shutil # Enables high-level file operations such as copying and removing files/directories 
 
 # Utility Functions
-
 def slugify(text):
     """
     Convert a string into a file-friendly slug.
@@ -93,7 +92,6 @@ def filter_entry(entry, keys_to_remove):
 
 
 # Cleanup Functions
-
 def cleanup_orphan_files(directory, expected_files):
     """
     Delete any .json file in the specified directory that is not in expected_files.
@@ -116,7 +114,6 @@ def cleanup_orphan_files(directory, expected_files):
          print(f"Cleanup Warning: Directory '{directory}' disappeared during cleanup scan.")
     except Exception as e:
         print(f"Error scanning directory {directory} for file cleanup: {e}")
-
 
 def cleanup_orphan_folders(output_base_path, active_topic_slugs, active_categories_by_topic_slug):
     """
@@ -231,7 +228,6 @@ def cleanup_orphan_folders(output_base_path, active_topic_slugs, active_categori
 
 
 # Data Processing Functions
-
 def process_table_from_sqlite(conn, table_name, output_base_datasets, blacklist_keys):
     """
     Process a table from the SQLite database. Includes file_name slugification.
@@ -357,7 +353,6 @@ def process_table_from_sqlite(conn, table_name, output_base_datasets, blacklist_
     # Return the list of full entries (for global aggregation) and the active category slugs for this table
     return all_entries_full, active_category_slugs_in_table
 
-
 def generate_category_lists(global_entries, output_base_datasets):
     """
     Group entries by topic slug and extract unique original category names for each topic.
@@ -408,8 +403,8 @@ def generate_topics_list(global_entries, output_base_datasets):
     content_str = json.dumps(topics_list_sorted, indent=4)
     write_file_if_different(output_file, content_str)
 
-# Main Execution Logic
 
+# Main Execution Logic
 def main():
     """
     Main function:

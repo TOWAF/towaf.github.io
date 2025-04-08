@@ -1,5 +1,5 @@
-import subprocess
-import sys
+import subprocess # Allows spawning new processes, connecting to their input/output streams, and retrieving their results
+import sys # Provides access to system-specific parameters and functions, interacting with the Python interpreter
 
 def run_script(script_path):
     """
