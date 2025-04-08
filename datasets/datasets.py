@@ -204,7 +204,7 @@ def cleanup_orphan_folders(output_base_path, active_topic_slugs, active_categori
                     print(f"Error deleting category folder {item_path}: {e}")
 
         # Check collected JSON files (aggregated category jsons) against active category slugs
-        category_list_filename = f"{topic_slug}-categories.json"
+        category_list_filename = f"categories.json"
         # topic_aggregate_filename = f"{topic_slug}.json" # No longer needed here as it's at base level
 
         for filename, item_path in files_in_topic_folder:
@@ -356,8 +356,8 @@ def process_table_from_sqlite(conn, table_name, output_base_datasets, blacklist_
 def generate_category_lists(global_entries, output_base_datasets):
     """
     Group entries by topic slug and extract unique original category names for each topic.
-    Write a JSON file named "{topic_slug}-categories.json" in the datasets path:
-    "{output_base_datasets}/{topic_slug}/{topic_slug}-categories.json".
+    Write a JSON file named "categories.json" in the datasets path:
+    "{output_base_datasets}/{topic_slug}/categories.json".
     """
     categories_by_topic_slug = {}
     for entry in global_entries:
@@ -373,7 +373,7 @@ def generate_category_lists(global_entries, output_base_datasets):
         if not categories_set:
             # If no active categories, we might want to remove an existing category list file
             topic_folder = os.path.join(output_base_datasets, topic_slug)
-            output_file = os.path.join(topic_folder, f"{topic_slug}-categories.json")
+            output_file = os.path.join(topic_folder, f"categories.json")
             if os.path.exists(output_file):
                 try:
                     os.remove(output_file)
@@ -385,7 +385,7 @@ def generate_category_lists(global_entries, output_base_datasets):
         topic_folder = os.path.join(output_base_datasets, topic_slug)
         os.makedirs(topic_folder, exist_ok=True) # Ensure topic folder exists
 
-        output_file = os.path.join(topic_folder, f"{topic_slug}-categories.json")
+        output_file = os.path.join(topic_folder, f"categories.json")
         category_list_sorted = sorted(list(categories_set)) # Already filtered above
         content_str = json.dumps(category_list_sorted, indent=4)
         write_file_if_different(output_file, content_str)

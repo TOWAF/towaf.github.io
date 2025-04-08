@@ -380,9 +380,9 @@ def main():
     """
     script_dir = os.path.dirname(os.path.realpath(__file__))
     db_path = os.path.normpath(os.path.join(script_dir, "../datasets/content.json"))
-    media_template_path = os.path.join(script_dir, "templates/slugified-media-piece.html")
-    category_template_path = os.path.join(script_dir, "templates/slugified-category.html")
-    topic_template_path = os.path.join(script_dir, "templates/slugified-topic.html")
+    media_template_path = os.path.join(script_dir, "templates/media-piece.html")
+    category_template_path = os.path.join(script_dir, "templates/category.html")
+    topic_template_path = os.path.join(script_dir, "templates/topic.html")
     base_output = script_dir
 
     db_data = load_database(db_path)

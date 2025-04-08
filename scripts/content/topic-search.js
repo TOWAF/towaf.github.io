@@ -29,7 +29,7 @@ function getCategoriesJsonFilePath() {
   }
   let fileName = pathParts[pathParts.length - 1];
   let topic = fileName.replace('.html', '').toLowerCase();
-  return `/datasets/content/${topic}/${topic}-categories.json`;
+  return `/datasets/content/${topic}/categories.json`;
 }
 
 /**
