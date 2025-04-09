@@ -616,6 +616,28 @@
         "crc32": "ffc0e527"
     },
     {
+        "topic_id": 1,
+        "name": "Media Piece",
+        "year": 9999,
+        "creator": "Creator Name",
+        "topic": "Topic",
+        "category": "Category",
+        "type": "Type",
+        "specific": "Specific",
+        "media_piece_path": "/content/topic/category/media-piece.html",
+        "screenshot_path": "/media/content/topic/category/media-piece.jpg",
+        "file_name": "file-name.mp3",
+        "file_size": 9999.0,
+        "data_metric": "GB",
+        "source_link": null,
+        "download_link": null,
+        "magnet_link": null,
+        "sha256": null,
+        "sha1": null,
+        "md5": null,
+        "crc32": null
+    },
+    {
         "videos_id": 5,
         "name": "Bulldog Drummond",
         "year": 1929,
