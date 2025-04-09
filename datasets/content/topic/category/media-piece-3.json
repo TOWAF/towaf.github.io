@@ -1,0 +1,17 @@
+{
+    "name": "Media Piece 3",
+    "year": 7777,
+    "creator": "Creator Name",
+    "topic": "Topic",
+    "category": "Category",
+    "type": "Type 3",
+    "specific": "Specific",
+    "media_piece_path": "/content/topic/category/media-piece-3.html",
+    "screenshot_path": "/media/content/topic/category/media-piece-3.jpg",
+    "file_name": "file-name.iso",
+    "file_size": 77.0,
+    "data_metric": "GB",
+    "source_link": null,
+    "download_link": null,
+    "magnet_link": null
+}

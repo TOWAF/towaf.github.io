@@ -1,0 +1,17 @@
+{
+    "name": "Media Piece 2",
+    "year": 8888,
+    "creator": "Creator Name",
+    "topic": "Topic",
+    "category": "Category",
+    "type": "Type 2",
+    "specific": "Specific",
+    "media_piece_path": "/content/topic/category/media-piece-2.html",
+    "screenshot_path": "/media/content/topic/category/media-piece-2.jpg",
+    "file_name": "file-name.mp4",
+    "file_size": 888.0,
+    "data_metric": "GB",
+    "source_link": null,
+    "download_link": null,
+    "magnet_link": null
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Media Piece 4",
+    "year": 5555,
+    "creator": "Creator Name",
+    "topic": "Topic",
+    "category": "Category",
+    "type": "Type 5",
+    "specific": "Specific",
+    "media_piece_path": "/content/topic/category/media-piece-4.html",
+    "screenshot_path": "/media/content/topic/category/media-piece-4.jpg",
+    "file_name": "file-name.pdf",
+    "file_size": 55.0,
+    "data_metric": "GB",
+    "source_link": null,
+    "download_link": null,
+    "magnet_link": null
+}
