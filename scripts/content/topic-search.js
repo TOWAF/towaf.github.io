@@ -174,7 +174,7 @@ function createTopicCard(entry) {
   const nameCol = document.createElement('div');
   nameCol.className = 'col-12 text-start';
   const nameLink = document.createElement('a');
-  nameCol.style.padding = '6px 18px 3px 18px';
+  nameCol.style.padding = '3px 18px 3px 18px';
   nameLink.href = entry.media_piece_path;
   nameLink.className = 'card-title no-underline content-paragraph';
 
