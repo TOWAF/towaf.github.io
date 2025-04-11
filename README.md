@@ -1,6 +1,8 @@
 # TOWAF
 Demo version of The Open Web Archive Framework
 
+(alt: https://towaf.github.io/)
+
 ![loading](https://github.com/user-attachments/assets/9496a23e-74ed-4191-8438-194128ee3faf)
 
 Simple Folder-Based Web Framework for Diverse Digital Content!
