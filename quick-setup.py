@@ -1,6 +1,6 @@
-import os
-import shutil
-import json  # To work with JSON files
+import os # Provides functions for interacting with the operating system (e.g., file and directory operations)
+import shutil # Enables high-level file operations such as copying and removing files/directories 
+import json # Allows for easy encoding and decoding of JSON data
 
 def replace_in_file(file_path, old_name, new_name):
     """Replaces occurrences of old_name with new_name in a file, handling case."""
