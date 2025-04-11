@@ -10,18 +10,18 @@ TLDR: Archive.org but anyone can host the website as a static site.
 
 ## Overview
 
-The Open Web Archive Framework (TOWAF) is a customizable archive tool designed for the easy deployment and navigation of digitally archived content. It addresses the challenges of managing and publishing independent digital archives by facilitating the creation and maintenance of simple archives that present links and metadata information.
+The Open Web Archive Framework (TOWAF) is a customisable archive tool designed for the easy deployment and navigation of digitally archived content. It addresses the challenges of managing and publishing independent digital archives by facilitating the creation and maintenance of simple archives that present links and metadata information.
 
-The framework aims to provide a standardized yet customizable solution for communities to independently create archive websites focused on presenting links and metadata, ensuring valuable information about creative works can be preserved and presented clearly.
+The framework aims to provide a standardised yet customisable solution for communities to independently create archive websites focused on presenting links and metadata, ensuring valuable information about creative works can be preserved and presented clearly.
 
 ## Features
 
 * **Database-Driven:** Uses an SQLite database to manage metadata.
 * **Static Site Generation:** Python scripts process the database to generate fragmented JSON datasets and static HTML pages.
-* **Client-Side Loading:** JavaScript loads necessary data fragments on the client-side, optimizing bandwidth usage.
+* **Client-Side Loading:** JavaScript loads necessary data fragments on the client-side, optimising bandwidth usage.
 * **File-Manager Inspired UI:** Features a graphical user interface for topic/category navigation.
 * **Basic Search:** Allows filtering by name within topic and category pages.
-* **Customizable:** Offers options for initial customization like project codename and theme color via `quick-setup.py`.
+* **Customisable:** Offers options for initial customisation like project codename and theme color via `quick-setup.py`.
 * **Portable:** Suitable for deployment on static hosting platforms (like GitHub Pages) without needing complex backend infrastructure.
 
 ## Technology Stack
@@ -48,7 +48,7 @@ The typical workflow for managing a TOWAF archive involves:
 
 **(Optional) Initial Setup:**
 
-* Run `quick-setup.py` to customize the project's codename and main theme color.
+* Run `quick-setup.py` to customise the project's codename and main theme color.
 
 ## Directory Structure Overview
 
